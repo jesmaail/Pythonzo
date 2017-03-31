@@ -1,10 +1,10 @@
-from ApiLayer import ApiLayer
+from ApiLayer import MonzoApiLayer
 from Monzo import MonzoAccount, MonzoBalance
 import os
 
 # Take in the access token for access to account
 accessToken = input("Enter Monzo access token: ")
-api = ApiLayer(accessToken)
+api = MonzoApiLayer(accessToken)
 
 # Clears the terminal
 os.system('cls' if os.name == 'nt' else 'clear')

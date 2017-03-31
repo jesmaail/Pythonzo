@@ -1,26 +1,11 @@
 import requests
 
-# Object that handles API communication, ideally want to move to some inheritance
-class ApiLayer:
-	MONZO_URL = 'https://api.monzo.com'
+class ApiLayer(object):
 
 	## Constructor, will take in an access token, and generate the auth header.
 	def __init__(self, token):
 		self.ACCESS_TOKEN = token		
-		self.HEADERS = {'Authorization': 'Bearer {0}'.format(self.ACCESS_TOKEN)}
-
-	def GetAccounts(self):
-		return self.Get(self.MONZO_URL + "/accounts", self.HEADERS)
-
-	def WhoAmI(self):
-		return self.Get(self.MONZO_URL + "/ping/whoami", self.HEADERS)
-
-	def GetTransactions(self, account_id):
-		return self.Get(self.MONZO_URL + "/transactions?expand[]=merchant&account+id=" + account_id, self.HEADERS)
-
-	def GetBalance(self, account_id):
-		return self.Get(self.MONZO_URL + "/balance?account_id=" + account_id, self.HEADERS)
-		
+		self.HEADERS = {'Authorization': 'Bearer {0}'.format(self.ACCESS_TOKEN)}		
 
 	def Get(self, url, headers=None, params=None):
 		response = requests.get(url=url, headers=headers, params=params)
@@ -37,3 +22,24 @@ class ApiLayer:
 		else:
 			print("Failure:")
 			return response
+
+
+class MonzoApiLayer(ApiLayer):
+
+	MONZO_URL = 'https://api.monzo.com'
+	ACCOUNTS_URL = "/accounts"
+	WHOAMI_URL = "/ping/whoami"
+	TRANSACTIONS_URL = "/transactions?expand[]=merchant&account+id="
+	BALANCE_URL = "/balance?account_id="
+
+	def GetAccounts(self):
+		return self.Get(self.MONZO_URL + self.ACCOUNTS_URL, self.HEADERS)
+
+	def WhoAmI(self):
+		return self.Get(self.MONZO_URL + self.WHOAMI_URL, self.HEADERS)
+
+	def GetTransactions(self, account_id):
+		return self.Get(self.MONZO_URL + self.TRANSACTIONS_URL + account_id, self.HEADERS)
+
+	def GetBalance(self, account_id):
+		return self.Get(self.MONZO_URL + self.BALANCE_URL + account_id, self.HEADERS)
