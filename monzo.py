@@ -2,9 +2,9 @@
 # Common methods across these objects
 class MonzoObject(object):
 
-	def GetFormattedBalance(self):
+	def GetFormattedAmount(self):
 		return {
-			"GBP" : "£" + str(self.BALANCE /100)
+			"GBP" : "£" + str(format(self.AMOUNT /100, '.2f'))
 		}[self.CURRENCY]
 
 
@@ -21,7 +21,7 @@ class MonzoAccount(object):
 class MonzoBalance(MonzoObject):
 
 	def __init__(self, bal):
-		self.BALANCE = bal['balance']
+		self.AMOUNT = bal['balance']
 		self.CURRENCY = bal['currency']
 		self.SPEND_TODAY = bal['spend_today']
 		self.LOCAL_CURRENCY = bal['local_currency']
@@ -32,10 +32,17 @@ class MonzoTransaction(MonzoObject):
 
 	def __init__(self, tran):
 		self.ID = tran['id']
-		self.GROUP_ID = tran['group_id']
 		self.DATE = tran['created']
-		self.NAME = tran['name']
-		self.CATEGORY = tran['category']
+		self.MERCHANT = MonzoMerchant(tran['merchant'])
 		self.AMOUNT = tran['local_amount']
 		self.CURRENCY = tran['local_currency']
 		self.IS_TOPUP = tran['is_load']
+
+# Holds Merchant information
+class MonzoMerchant(object):
+
+	def __init__(self, merch):
+		self.ID = merch['id']
+		self.GROUP_ID = merch['group_id']
+		self.NAME = merch['name']
+		self.CATEGORY = merch['category']

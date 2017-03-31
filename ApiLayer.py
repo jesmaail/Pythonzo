@@ -29,7 +29,7 @@ class MonzoApiLayer(ApiLayer):
 	MONZO_URL = 'https://api.monzo.com'
 	ACCOUNTS_URL = "/accounts"
 	WHOAMI_URL = "/ping/whoami"
-	TRANSACTIONS_URL = "/transactions?expand[]=merchant&account+id="
+	TRANSACTIONS_URL = "/transactions?expand[]=merchant&account_id="
 	BALANCE_URL = "/balance?account_id="
 
 	def GetAccounts(self):
