@@ -1,5 +1,5 @@
 from ApiLayer import MonzoApiLayer
-from Monzo import Monzo, MonzoAccount, MonzoBalance, MonzoTransaction
+from Monzo import Monzo, MonzoAccount, MonzoBalance, MonzoTransaction, MonzoTransactions
 import os
 
 # Take in the access token for access to account
@@ -13,13 +13,24 @@ os.system('cls' if os.name == 'nt' else 'clear')
 # These next bits will be gone when moving to the Monzo Object for holding all the information.
 myAccount = MonzoAccount(api.get_accounts())
 accountId = myAccount.id
-myBalance = MonzoBalance(api.get_balance(accountId))
-myFirstTransaction = MonzoTransaction(api.get_transactions(accountId)['transactions'][3])
 
 print("Test Data:")
-print(myBalance.get_formatted_amount())
-print(myFirstTransaction.get_formatted_amount())
-print(myFirstTransaction.merchant.name)
+
+myBalance = MonzoBalance(api.get_balance(accountId))
+print("Balance: " + myBalance.get_formatted_amount())
+
+myFirstTransaction = MonzoTransaction(api.get_transactions(accountId)['transactions'][3])
+print("Transaction 3 Amount: " + myFirstTransaction.get_formatted_amount())
+#print(myFirstTransaction.merchant.name)
+
+myTransactionsOld = api.get_transactions(accountId)['transactions']
+print("Old Transaction method length: " + str(len(myTransactionsOld)))
+print("Old Transaction method TopUp check: " + str(myTransactionsOld[1]['is_load']))
+
+myTransactionsNew = MonzoTransactions(api.get_transactions(accountId)['transactions'])
+print("New Transaction method length: " + str(myTransactionsNew.get_transactions_num()))
+print("New Transaction method transaction Merchant: " + str(myTransactionsNew.get_transaction_at_index(0).merchant))
+
 
 
 # Monzo Super Object

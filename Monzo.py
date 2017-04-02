@@ -33,11 +33,53 @@ class MonzoTransaction(CurrencyObject):
 
 	def __init__(self, tran):
 		self.id = tran['id']
-		self.date = tran['created']
-		self.merchant = MonzoMerchant(tran['merchant'])
+		self.date = tran['created']		
+		self.is_topup = tran['is_load']
+		self.merchant = self.get_merchant_data(tran)
 		self.amount = tran['local_amount']
 		self.currency = tran['local_currency']
-		self.is_topup = tran['is_load']
+
+	def get_merchant_data(self, tran):
+		if not self.is_topup:
+			return MonzoMerchant(tran['merchant'])
+		else:
+			return None
+
+# # Not used currently, differentiate within the Transaction class
+# class MonzoTopUp(MonzoTransaction):
+
+# 	def get_merchant_data(self):
+# 		return None
+
+
+# class MonzoPayment(MonzoTransaction):
+
+# 	def get_merchant_data(self):
+# 		return MonzoMerchant(tran['merchant'])
+
+
+# Holds all transactions
+class MonzoTransactions(object):
+
+	def __init__(self, trans):
+		transactions_num = len(trans)
+		self.transactions = []
+
+		for x in range(0, transactions_num):
+			transaction = MonzoTransaction(trans[x])
+			self.transactions.append(transaction)
+
+	def get_transactions_num(self):
+		return len(self.transactions)
+
+	def get_transaction_at_index(self, index):
+		return self.transactions[index]
+
+	def get_all_payments(self):
+		return NotImplemented
+
+	def get_all_TopUps(self):
+		return NotImplemented
 
 
 # Holds Merchant information
@@ -54,6 +96,7 @@ class MonzoMerchant(object):
 #
 # ToDo:
 #	- Add a transactions object holding all transactions
+#	- Differentiate between payment and top-up (top-up has no merchant) [is_load] property
 #	- Be able to query the transactions by date, merchant, category
 #
 class Monzo(object):
