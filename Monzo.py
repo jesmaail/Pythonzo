@@ -53,7 +53,6 @@ class MonzoMerchant(object):
 # Class that will hold everything, pass in the access token here.
 #
 # ToDo:
-#	- Move the AccountID, AccountHolder, Balance, etc. to Getter Methods
 #	- Add a transactions object holding all transactions
 #	- Be able to query the transactions by date, merchant, category
 #
@@ -61,10 +60,14 @@ class Monzo(object):
 
 	def __init__(self, token):
 		monzoApi = MonzoApiLayer(token)
+		self.account = MonzoAccount(monzoApi.get_accounts())
+		self.balance = MonzoBalance(monzoApi.get_balance(self.get_account_id()))
 
-		self.account_object = MonzoAccount(monzoApi.get_accounts())
-		self.account_id = self.account_object.id
-		self.account_holder = self.account_object.description
+	def get_account_id(self):
+		return self.account.id
 
-		self.balance_object = MonzoBalance(monzoApi.get_balance(self.account_id)) 
-		self.balance = self.balance_object.get_formatted_amount()
+	def get_account_holder(self):
+		return self.account.description
+
+	def get_current_balance(self):
+		return self.balance.get_formatted_amount()
