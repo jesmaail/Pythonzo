@@ -1,6 +1,6 @@
 
 # Common methods across these objects
-class MonzoObject(object):
+class CurrencyObject(object):
 
 	def GetFormattedAmount(self):
 		return {
@@ -18,7 +18,7 @@ class MonzoAccount(object):
 
 
 # Holds Account Balance information
-class MonzoBalance(MonzoObject):
+class MonzoBalance(CurrencyObject):
 
 	def __init__(self, bal):
 		self.AMOUNT = bal['balance']
@@ -28,7 +28,7 @@ class MonzoBalance(MonzoObject):
 		self.LOCAL_EXCHANGE_RATE = bal['local_exchange_rate']
 
 # Holds Transaction information
-class MonzoTransaction(MonzoObject):
+class MonzoTransaction(CurrencyObject):
 
 	def __init__(self, tran):
 		self.ID = tran['id']
@@ -46,3 +46,16 @@ class MonzoMerchant(object):
 		self.GROUP_ID = merch['group_id']
 		self.NAME = merch['name']
 		self.CATEGORY = merch['category']
+
+
+# Class that will hold everything
+class Monzo(object):
+
+	def __init__(self, account, balance, transactions):
+		self.ACCOUNT = MonzoAccount(account)
+
+		# This needs the accountId which is part of the MonzoAccount
+		#self.BALANCE = MonzoBalance(balance)
+
+
+		# Need some logic here to loop over all the transactions are store in a list.

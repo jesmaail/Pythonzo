@@ -10,6 +10,7 @@ api = MonzoApiLayer(accessToken)
 os.system('cls' if os.name == 'nt' else 'clear')
 
 
+# These next bits will be gone when moving to the Monzo Object for holding all the information.
 myAccount = MonzoAccount(api.GetAccounts())
 accountId = myAccount.ID
 
@@ -17,21 +18,18 @@ myBalance = MonzoBalance(api.GetBalance(accountId))
 
 myFirstTransaction = MonzoTransaction(api.GetTransactions(accountId)['transactions'][3])
 
-#print(api.GetTransactions(accountId)['transactions'][0])
 print(myBalance.GetFormattedAmount())
 print(myFirstTransaction.GetFormattedAmount())
 print(myFirstTransaction.MERCHANT.NAME)
 
 
 
-
-# Bits that have been used to verify functionality
-
+## Bits that have been used to verify functionality
+#print(api.GetTransactions(accountId)['transactions'][0])
 #print(myBalance.BALANCE)
 #print("Account Id: " + myAccount.ID)
 #print("Account Creation Date: " + myAccount.CREATED)
 #print("Account Description: " + myAccount.DESCRIPTION)
 #print("")
 #print(api.WhoAmI())
-
 #print(api.GetBalance(accountId)['balance'])
