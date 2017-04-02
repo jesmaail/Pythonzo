@@ -1,12 +1,12 @@
+from ApiLayer import MonzoApiLayer
 
-# Common methods across these objects
+# Common methods across Monzo classes
 class CurrencyObject(object):
 
 	def GetFormattedAmount(self):
 		return {
 			"GBP" : "£" + str(format(self.AMOUNT /100, '.2f'))
 		}[self.CURRENCY]
-
 
 # Holds Account information
 class MonzoAccount(object):
@@ -27,6 +27,7 @@ class MonzoBalance(CurrencyObject):
 		self.LOCAL_CURRENCY = bal['local_currency']
 		self.LOCAL_EXCHANGE_RATE = bal['local_exchange_rate']
 
+
 # Holds Transaction information
 class MonzoTransaction(CurrencyObject):
 
@@ -38,6 +39,7 @@ class MonzoTransaction(CurrencyObject):
 		self.CURRENCY = tran['local_currency']
 		self.IS_TOPUP = tran['is_load']
 
+
 # Holds Merchant information
 class MonzoMerchant(object):
 
@@ -48,14 +50,21 @@ class MonzoMerchant(object):
 		self.CATEGORY = merch['category']
 
 
-# Class that will hold everything
+# Class that will hold everything, pass in the access token here.
+#
+# ToDo:
+#	- Move the AccountID, AccountHolder, Balance, etc. to Getter Methods
+#	- Add a transactions object holding all transactions
+#	- Be able to query the transactions by date, merchant, category
+#
 class Monzo(object):
 
-	def __init__(self, account, balance, transactions):
-		self.ACCOUNT = MonzoAccount(account)
+	def __init__(self, token):
+		monzoApi = MonzoApiLayer(token)
 
-		# This needs the accountId which is part of the MonzoAccount
-		#self.BALANCE = MonzoBalance(balance)
+		self.ACCOUNT_OBJECT = MonzoAccount(monzoApi.GetAccounts())
+		self.ACCOUNT_ID = self.ACCOUNT_OBJECT.ID
+		self.ACCOUNT_HOLDER = self.ACCOUNT_OBJECT.DESCRIPTION
 
-
-		# Need some logic here to loop over all the transactions are store in a list.
+		self.BALANCE_OBJECT = MonzoBalance(monzoApi.GetBalance(self.ACCOUNT_ID)) 
+		self.BALANCE = self.BALANCE_OBJECT.GetFormattedAmount()
