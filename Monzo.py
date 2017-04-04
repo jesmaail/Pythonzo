@@ -64,32 +64,26 @@ class MonzoTransactions(object):
 	def __init__(self, trans):
 		self.transactions_num = len(trans)
 		self.transactions = []
+		self.topups = []
+		self.payments = []
 
 		for x in range(0, self.transactions_num):
 			transaction = MonzoTransaction(trans[x])
 			self.transactions.append(transaction)
 
-	def get_transactions_num(self):
-		return len(self.transactions)
+		self.seperate_payments_topups()
 
 	def get_transaction_at_index(self, index):
 		return self.transactions[index]
 
-	def get_all_payments(self):
-		payments = []
-		for x in range (0, self.transactions_num):
-			if self.transactions[x].merchant != None:
-				payments.append(self.transactions[x])
+	def seperate_payments_topups(self):
+		for x in range(0, self.transactions_num):
+			currentTransaction = self.transactions[x]
+			if currentTransaction.merchant == None:
+				self.topups.append(currentTransaction)
+			else:
+				self.payments.append(currentTransaction)
 
-		return payments
-
-	def get_all_topups(self):
-		topups = []
-		for x in range (0, self.transactions_num):
-			if self.transactions[x].merchant == None:
-				topups.append(self.transactions[x])
-
-		return topups
 
 
 # Holds Merchant information
@@ -105,16 +99,20 @@ class MonzoMerchant(object):
 # Class that will hold everything, pass in the access token here.
 #
 # ToDo:
-#	- Add a transactions object holding all transactions
-#	- Differentiate between payment and top-up (top-up has no merchant) [is_load] property
+# 	- Take the get Payments/Topups logic out of Monzo object (SRP and all that jazz)
+#	- Store Payments and Topups seperately in the MonzoTransactions object
+#	- List all merchants
+#	- List all categories (Enum? but may change over time, could do it dynamically)
+#	- Unit tests?
 #	- Be able to query the transactions by date, merchant, category
-#
+#	
 class Monzo(object):
 
 	def __init__(self, token):
 		monzoApi = MonzoApiLayer(token)
 		self.account = MonzoAccount(monzoApi.get_accounts())
 		self.balance = MonzoBalance(monzoApi.get_balance(self.get_account_id()))
+		self.transactions = MonzoTransactions(monzoApi.get_transactions(self.get_account_id()))
 
 	def get_account_id(self):
 		return self.account.id
@@ -124,3 +122,22 @@ class Monzo(object):
 
 	def get_current_balance(self):
 		return self.balance.get_formatted_amount()
+
+	def get_transactions_num(self):
+		return self.transactions.transactions_num
+
+	def get_all_payments(self):
+		payments = []
+		for x in range(0, self.get_transactions_num()):
+			currentTransaction = self.transactions.get_transaction_at_index(x)
+			if currentTransaction.merchant != None:
+				payments.append(currentTransaction)
+		return payments
+
+	def get_all_topups(self):
+		topups = []
+		for x in range(0, self.get_transactions_num()):
+			currentTransaction = self.transactions.get_transaction_at_index(x)
+			if currentTransaction.merchant == None:
+				topups.append(currentTransaction)
+		return topups

@@ -39,7 +39,7 @@ class MonzoApiLayer(ApiLayer):
 		return self.get(self.MONZO_URL + self.WHOAMI_URL, self.HEADERS)
 
 	def get_transactions(self, account_id):
-		return self.get(self.MONZO_URL + self.TRANSACTIONS_URL + account_id, self.HEADERS)
+		return self.get(self.MONZO_URL + self.TRANSACTIONS_URL + account_id, self.HEADERS)['transactions']
 
 	def get_balance(self, account_id):
 		return self.get(self.MONZO_URL + self.BALANCE_URL + account_id, self.HEADERS)
