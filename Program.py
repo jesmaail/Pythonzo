@@ -30,6 +30,8 @@ print("Old Transaction method TopUp check: " + str(myTransactionsOld[1]['is_load
 myTransactionsNew = MonzoTransactions(api.get_transactions(accountId)['transactions'])
 print("New Transaction method length: " + str(myTransactionsNew.get_transactions_num()))
 print("New Transaction method transaction Merchant: " + str(myTransactionsNew.get_transaction_at_index(0).merchant))
+print("Payments Count: " + str(len(myTransactionsNew.get_all_payments())))
+print("TopUps Count: " + str(len(myTransactionsNew.get_all_topups())))
 
 
 

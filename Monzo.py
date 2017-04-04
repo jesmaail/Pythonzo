@@ -62,10 +62,10 @@ class MonzoTransaction(CurrencyObject):
 class MonzoTransactions(object):
 
 	def __init__(self, trans):
-		transactions_num = len(trans)
+		self.transactions_num = len(trans)
 		self.transactions = []
 
-		for x in range(0, transactions_num):
+		for x in range(0, self.transactions_num):
 			transaction = MonzoTransaction(trans[x])
 			self.transactions.append(transaction)
 
@@ -76,10 +76,20 @@ class MonzoTransactions(object):
 		return self.transactions[index]
 
 	def get_all_payments(self):
-		return NotImplemented
+		payments = []
+		for x in range (0, self.transactions_num):
+			if self.transactions[x].merchant != None:
+				payments.append(self.transactions[x])
 
-	def get_all_TopUps(self):
-		return NotImplemented
+		return payments
+
+	def get_all_topups(self):
+		topups = []
+		for x in range (0, self.transactions_num):
+			if self.transactions[x].merchant == None:
+				topups.append(self.transactions[x])
+
+		return topups
 
 
 # Holds Merchant information
