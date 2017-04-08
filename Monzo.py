@@ -116,7 +116,6 @@ class MonzoMerchant(object):
 # Class that will hold everything, pass in the access token here.
 #
 # ToDo:
-#	- List all categories (Enum? but may change over time, could do it dynamically)
 #	- Unit tests?
 #	- Be able to query the transactions by date, merchant, category
 #	
