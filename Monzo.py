@@ -4,8 +4,11 @@ from ApiLayer import MonzoApiLayer
 class CurrencyObject(object):
 
 	def get_formatted_amount(self):
+		currencyString = str(format(self.amount/100, '.2f'))
 		return {
-			"GBP" : "£" + str(format(self.amount /100, '.2f'))
+			"GBP" : "£" + currencyString,
+			"EUR" : "€" + currencyString,
+			"USD" : "$" + currencyString
 		}[self.currency]
 
 # Holds Account information
@@ -77,12 +80,12 @@ class MonzoTransactions(object):
 		return self.transactions[index]
 
 	def seperate_payments_topups(self):
-		for x in range(0, self.transactions_num):
-			currentTransaction = self.transactions[x]
-			if currentTransaction.merchant == None:
-				self.topups.append(currentTransaction)
+
+		for transaction in self.transactions:
+			if transaction.merchant == None:
+				self.topups.append(transaction)
 			else:
-				self.payments.append(currentTransaction)
+				self.payments.append(transaction)
 
 	def get_list_of_merchants(self):
 		return NotImplemented;
