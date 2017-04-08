@@ -84,6 +84,15 @@ class MonzoTransactions(object):
 			else:
 				self.payments.append(currentTransaction)
 
+	def get_list_of_merchants(self):
+		return NotImplemented;
+
+	def get_all_payments(self):
+		return self.payments
+
+	def get_all_topups(self):
+		return self.topups
+
 
 
 # Holds Merchant information
@@ -99,8 +108,7 @@ class MonzoMerchant(object):
 # Class that will hold everything, pass in the access token here.
 #
 # ToDo:
-# 	- Take the get Payments/Topups logic out of Monzo object (SRP and all that jazz)
-#	- Store Payments and Topups seperately in the MonzoTransactions object
+#	- Move to foreach
 #	- List all merchants
 #	- List all categories (Enum? but may change over time, could do it dynamically)
 #	- Unit tests?
@@ -122,22 +130,3 @@ class Monzo(object):
 
 	def get_current_balance(self):
 		return self.balance.get_formatted_amount()
-
-	def get_transactions_num(self):
-		return self.transactions.transactions_num
-
-	def get_all_payments(self):
-		payments = []
-		for x in range(0, self.get_transactions_num()):
-			currentTransaction = self.transactions.get_transaction_at_index(x)
-			if currentTransaction.merchant != None:
-				payments.append(currentTransaction)
-		return payments
-
-	def get_all_topups(self):
-		topups = []
-		for x in range(0, self.get_transactions_num()):
-			currentTransaction = self.transactions.get_transaction_at_index(x)
-			if currentTransaction.merchant == None:
-				topups.append(currentTransaction)
-		return topups
