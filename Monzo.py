@@ -48,18 +48,6 @@ class MonzoTransaction(CurrencyObject):
 		else:
 			return None
 
-# # Not used currently, differentiate within the Transaction class
-# class MonzoTopUp(MonzoTransaction):
-
-# 	def get_merchant_data(self):
-# 		return None
-
-
-# class MonzoPayment(MonzoTransaction):
-
-# 	def get_merchant_data(self):
-# 		return MonzoMerchant(tran['merchant'])
-
 
 # Holds all transactions
 class MonzoTransactions(object):
@@ -80,15 +68,11 @@ class MonzoTransactions(object):
 		return self.transactions[index]
 
 	def seperate_payments_topups(self):
-
 		for transaction in self.transactions:
 			if transaction.merchant == None:
 				self.topups.append(transaction)
 			else:
 				self.payments.append(transaction)
-
-	def get_list_of_merchants(self):
-		return NotImplemented;
 
 	def get_all_payments(self):
 		return self.payments
@@ -96,6 +80,27 @@ class MonzoTransactions(object):
 	def get_all_topups(self):
 		return self.topups
 
+	def get_list_of_merchant_names(self):
+		merchants = []
+		for payment in self.payments:
+			merchants.append(payment.merchant.name)
+
+		uniqueMerchants = set(merchants)
+
+		return uniqueMerchants;
+
+	def get_list_of_categories(self):
+		categories = []
+		for payment in self.payments:
+			categories.append(payment.merchant.category)
+
+		uniqueCategories = set(categories)
+
+		return uniqueCategories;
+
+
+	def get_payment_by_merchant_name(self, name):
+		return NotImplemented;
 
 
 # Holds Merchant information
@@ -111,8 +116,6 @@ class MonzoMerchant(object):
 # Class that will hold everything, pass in the access token here.
 #
 # ToDo:
-#	- Move to foreach
-#	- List all merchants
 #	- List all categories (Enum? but may change over time, could do it dynamically)
 #	- Unit tests?
 #	- Be able to query the transactions by date, merchant, category
