@@ -87,7 +87,7 @@ class MonzoTransactions(object):
 
 		uniqueMerchants = set(merchants)
 
-		return uniqueMerchants;
+		return list(uniqueMerchants);
 
 	def get_list_of_categories(self):
 		categories = []
@@ -96,7 +96,7 @@ class MonzoTransactions(object):
 
 		uniqueCategories = set(categories)
 
-		return uniqueCategories;
+		return list(uniqueCategories);
 
 
 	def get_payment_by_merchant_name(self, name):
