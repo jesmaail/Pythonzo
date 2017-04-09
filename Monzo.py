@@ -98,9 +98,13 @@ class MonzoTransactions(object):
 
 		return list(uniqueCategories);
 
-
 	def get_payment_by_merchant_name(self, name):
-		return NotImplemented;
+		criteria = []
+		for payment in self.payments:
+			if payment.merchant.name == name:
+				criteria.append(payment)
+
+		return criteria
 
 
 # Holds Merchant information
