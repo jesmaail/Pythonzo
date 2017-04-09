@@ -19,8 +19,11 @@ def printNumberedList(list):
 myMonzo = Monzo(accessToken)
 transactions = myMonzo.transactions
 
-paymentsNum = len(transactions.get_all_payments())
-topupsNum = len(transactions.get_all_topups())
+payments = transactions.get_all_payments()
+topups = transactions.get_all_topups()
+
+paymentsNum = len(payments)
+topupsNum = len(topups)
 merchantNames = transactions.get_list_of_merchant_names()
 categories = transactions.get_list_of_categories()
 
@@ -38,7 +41,4 @@ print("No. of Topups: " + str(topupsNum))
 # printNumberedList(categories)
 
 #print(transactions.get_payment_by_merchant_name("KFC"))
-print(str(transactions.get_num_payments_at_merchant("KFC")))
-print(str(transactions.get_num_payments_at_merchant("Tesco")))
-print(str(transactions.get_num_payments_at_merchant("Jack Murphys")))
-print(str(transactions.get_num_payments_at_merchant("Kon-tiki")))
+#print("Fried Chicken count: " + str(transactions.get_num_payments_at_merchant("KFC")))

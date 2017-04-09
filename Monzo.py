@@ -109,6 +109,18 @@ class MonzoTransactions(object):
 	def get_num_payments_at_merchant(self, name):
 		return len(self.get_payment_by_merchant_name(name))
 
+	def get_payment_by_date_range(self, start, end):
+		return NotImplemented
+
+	def get_num_payments_at_date_range(self, start, end):		
+		return NotImplemented
+
+	def get_payment_by_category(self, category):
+		return NotImplemented
+
+	def get_num_payments_at_category(self, category):
+		return NotImplemented
+
 
 # Holds Merchant information
 class MonzoMerchant(object):
