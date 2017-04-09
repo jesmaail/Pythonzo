@@ -106,6 +106,9 @@ class MonzoTransactions(object):
 
 		return criteria
 
+	def get_num_payments_at_merchant(self, name):
+		return len(self.get_payment_by_merchant_name(name))
+
 
 # Holds Merchant information
 class MonzoMerchant(object):
