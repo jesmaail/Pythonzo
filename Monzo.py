@@ -120,11 +120,16 @@ class MonzoTransactions(object):
 	def get_num_payments_at_date_range(self, start, end):		
 		return len(self.get_payments_by_date_range(start, end))
 
-	def get_payment_by_category(self, category):
-		return NotImplemented
+	def get_payments_by_category(self, category):
+		criteria = []
+		for payment in self.payments:
+			if payment.merchant.category == category:
+				criteria.append(payment)
+
+		return criteria
 
 	def get_num_payments_at_category(self, category):
-		return NotImplemented
+		return len(self.get_payments_by_category(category))
 
 
 # Holds Merchant information
@@ -140,6 +145,7 @@ class MonzoMerchant(object):
 # Class that will hold everything, pass in the access token here.
 #
 # ToDo:
+#	- Seperate into different class files
 #	- Format Dates into Date and Time
 #	- Unit tests?
 #	- Be able to query the transactions by date, merchant, category
