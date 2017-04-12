@@ -118,7 +118,7 @@ class MonzoTransactions(object):
 		return criteria
 
 	def get_num_payments_at_date_range(self, start, end):		
-		return NotImplemented
+		return len(self.get_payments_by_date_range(start, end))
 
 	def get_payment_by_category(self, category):
 		return NotImplemented

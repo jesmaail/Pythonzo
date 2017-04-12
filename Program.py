@@ -38,6 +38,7 @@ topupsNum = len(topups)
 merchantNames = transactions.get_list_of_merchant_names()
 categories = transactions.get_list_of_categories()
 paymentsThisWeek = transactions.get_payments_by_date_range("2017-04-10", "2017-04-16")
+numPaymentsThisWeek = transactions.get_num_payments_at_date_range("2017-04-10", "2017-04-16")
 
 print("Monzo Super Object:")
 print("Account ID: " + myMonzo.get_account_id())
@@ -49,6 +50,8 @@ print("No. of Topups: " + str(topupsNum))
 
 print("Payments This Week:\n")
 printTransactionList(paymentsThisWeek)
+
+print("No. of Payments This Week: " + str(numPaymentsThisWeek))
 
 # print("\nMerchants: ")
 # printNumberedList(merchantNames)
