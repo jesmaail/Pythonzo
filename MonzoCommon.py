@@ -59,6 +59,28 @@ class MonzoTime(object):
 		self.year = datetime[0:4]
 		self.time = datetime[11:16]
 
+	def get_formatted_month(self):
+		return {
+			"01" : "January",
+			"02" : "February",
+			"03" : "March",
+			"04" : "April",
+			"05" : "May",
+			"06" : "June",
+			"07" : "July",
+			"08" : "August",
+			"09" : "September",
+			"10" : "October",
+			"11" : "November",
+			"12" : "December"
+		}[self.month]
+
+	def get_formatted_date(self):
+		return self.day +"/"+ self.month +"/"+ self.year
+
+	def get_formatted_datetime(self):
+		return self.time +" "+ self.get_formatted_date()
+
 
 # Holds Merchant information
 class MonzoMerchant(object):
