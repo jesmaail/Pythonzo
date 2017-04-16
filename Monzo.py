@@ -6,9 +6,8 @@ from MonzoTransactions import MonzoTransactions
 #
 # ToDo:
 #	- Move Queries into the Monzo Object?
-#	- Multiple query criteria at once
 #	- Unit tests?
-#	- Be able to query the transactions by date, merchant, category
+#	- Be able to query the transactions by category
 #	
 class Monzo(object):
 

@@ -81,3 +81,9 @@ class MonzoTransactions(object):
 
 	def get_num_payments_at_category(self, category):
 		return len(self.get_payments_by_category(category))
+
+	def get_multiple_criteria(self, criteriaList):
+		result = set(criteriaList[0])
+		for criteria in criteriaList[1:]:
+		    result.intersection_update(criteria)
+		return result

@@ -18,6 +18,7 @@ def printTransaction(transaction):
 	print("ID: " + str(transaction.id))
 	print("Date: " + str(transaction.time.get_formatted_datetime()))
 	print("Merchant: " + str(transaction.merchant.name))
+	print("Category: " + str(transaction.merchant.category))
 	print("Amount: " + str(transaction.get_formatted_amount()))
 
 def printTransactionList(transactions):
@@ -41,6 +42,7 @@ paymentsThisWeek = transactions.get_payments_by_date_range("2017-04-10", "2017-0
 numPaymentsThisWeek = transactions.get_num_payments_at_date_range("2017-04-10", "2017-04-16")
 entertainmentTransactions = transactions.get_payments_by_category("entertainment")
 numEntertainmentTransactions = transactions.get_num_payments_at_category("entertainment")
+criteriaList = [entertainmentTransactions, paymentsThisWeek]
 
 print("Monzo Super Object:")
 print("Account ID: " + myMonzo.get_account_id())
@@ -50,13 +52,18 @@ print("No. of Transactions: " + str(transactions.transactions_num))
 print("No. of Payments: " + str(paymentsNum))
 print("No. of Topups: " + str(topupsNum))
 
+print("\nPayments by date and category:\n")
+
+# printTransactionList(transactions.get_multiple_criteria(criteriaList[0], criteriaList[1]))
+printTransactionList(transactions.get_multiple_criteria(criteriaList))
+
 # print("Payments by category:\n")
 # printTransactionList(entertainmentTransactions)
 # print("No. of Entertainment Transactions: " + str(numEntertainmentTransactions))
 
-print("Payments This Week:\n")
-printTransactionList(paymentsThisWeek)
-print("No. of Payments This Week: " + str(numPaymentsThisWeek))
+# print("Payments This Week:\n")
+# printTransactionList(paymentsThisWeek)
+# print("No. of Payments This Week: " + str(numPaymentsThisWeek))
 
 # print("\nMerchants: ")
 # printNumberedList(merchantNames)
