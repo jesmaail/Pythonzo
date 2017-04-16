@@ -7,7 +7,6 @@ from MonzoTransactions import MonzoTransactions
 # ToDo:
 #	- Move Queries into the Monzo Object?
 #	- Multiple query criteria at once
-#	- Format Dates into Date and Time
 #	- Unit tests?
 #	- Be able to query the transactions by date, merchant, category
 #	

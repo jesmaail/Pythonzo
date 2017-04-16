@@ -16,7 +16,7 @@ def printNumberedList(list):
 
 def printTransaction(transaction):
 	print("ID: " + str(transaction.id))
-	print("Date: " + str(transaction.datetime.get_formatted_datetime()))
+	print("Date: " + str(transaction.time.get_formatted_datetime()))
 	print("Merchant: " + str(transaction.merchant.name))
 	print("Amount: " + str(transaction.get_formatted_amount()))
 
@@ -50,13 +50,13 @@ print("No. of Transactions: " + str(transactions.transactions_num))
 print("No. of Payments: " + str(paymentsNum))
 print("No. of Topups: " + str(topupsNum))
 
-print("Payments by category:\n")
-printTransactionList(entertainmentTransactions)
-print("No. of Entertainment Transactions: " + str(numEntertainmentTransactions))
+# print("Payments by category:\n")
+# printTransactionList(entertainmentTransactions)
+# print("No. of Entertainment Transactions: " + str(numEntertainmentTransactions))
 
-#print("Payments This Week:\n")
-#printTransactionList(paymentsThisWeek)
-#print("No. of Payments This Week: " + str(numPaymentsThisWeek))
+print("Payments This Week:\n")
+printTransactionList(paymentsThisWeek)
+print("No. of Payments This Week: " + str(numPaymentsThisWeek))
 
 # print("\nMerchants: ")
 # printNumberedList(merchantNames)

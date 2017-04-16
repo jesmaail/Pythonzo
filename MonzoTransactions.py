@@ -63,7 +63,7 @@ class MonzoTransactions(object):
 	def get_payments_by_date_range(self, start, end):
 		criteria = []
 		for payment in self.payments:
-			if payment.date > start and payment.date < end:
+			if payment.time.raw > start and payment.time.raw < end:
 				criteria.append(payment)
 
 		return criteria
