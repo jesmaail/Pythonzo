@@ -5,6 +5,7 @@ from MonzoTransactions import MonzoTransactions
 # Class that will hold everything, pass in the access token here.
 #
 # ToDo:
+#	- Move Queries into the Monzo Object?
 #	- Multiple query criteria at once
 #	- Format Dates into Date and Time
 #	- Unit tests?

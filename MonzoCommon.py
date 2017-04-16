@@ -37,6 +37,7 @@ class MonzoTransaction(CurrencyObject):
 	def __init__(self, tran):
 		self.id = tran['id']
 		self.date = tran['created']		
+		self.datetime = MonzoTime(tran['created'])
 		self.is_topup = tran['is_load']
 		self.merchant = self.get_merchant_data(tran)
 		self.amount = tran['local_amount']
@@ -47,6 +48,16 @@ class MonzoTransaction(CurrencyObject):
 			return MonzoMerchant(tran['merchant'])
 		else:
 			return None
+
+
+# Holds transaction time information
+class MonzoTime(object):
+
+	def __init__(self, datetime):
+		self.day = datetime[8:10]
+		self.month = datetime[5:7]
+		self.year = datetime[0:4]
+		self.time = datetime[11:16]
 
 
 # Holds Merchant information

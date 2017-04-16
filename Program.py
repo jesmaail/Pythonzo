@@ -17,6 +17,10 @@ def printNumberedList(list):
 def printTransaction(transaction):
 	print("ID: " + str(transaction.id))
 	print("Date: " + str(transaction.date))
+	print("Day: " + str(transaction.datetime.day))
+	print("Month: " + str(transaction.datetime.month))
+	print("Year: " + str(transaction.datetime.year))
+	print("Time: " + str(transaction.datetime.time))
 	print("Merchant: " + str(transaction.merchant.name))
 	print("Amount: " + str(transaction.get_formatted_amount()))
 
