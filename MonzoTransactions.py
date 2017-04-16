@@ -49,16 +49,13 @@ class MonzoTransactions(object):
 
 		return list(uniqueCategories);
 
-	def get_payment_by_merchant_name(self, name):
+	def get_payments_by_merchant_name(self, name):
 		criteria = []
 		for payment in self.payments:
 			if payment.merchant.name == name:
 				criteria.append(payment)
 
 		return criteria
-
-	def get_num_payments_at_merchant(self, name):
-		return len(self.get_payment_by_merchant_name(name))
 
 	def get_payments_by_date_range(self, start, end):
 		criteria = []
@@ -68,9 +65,6 @@ class MonzoTransactions(object):
 
 		return criteria
 
-	def get_num_payments_at_date_range(self, start, end):		
-		return len(self.get_payments_by_date_range(start, end))
-
 	def get_payments_by_category(self, category):
 		criteria = []
 		for payment in self.payments:
@@ -78,9 +72,6 @@ class MonzoTransactions(object):
 				criteria.append(payment)
 
 		return criteria
-
-	def get_num_payments_at_category(self, category):
-		return len(self.get_payments_by_category(category))
 
 	def get_multiple_criteria(self, criteriaList):
 		result = set(criteriaList[0])
