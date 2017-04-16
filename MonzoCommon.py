@@ -4,7 +4,7 @@ from ApiLayer import MonzoApiLayer
 class CurrencyObject(object):
 
 	def get_formatted_amount(self):
-		currencyString = str(format(self.amount/100, '.2f'))
+		currencyString = str(format(abs(self.amount/100), '.2f'))
 		return {
 			"GBP" : "£" + currencyString,
 			"EUR" : "€" + currencyString,
