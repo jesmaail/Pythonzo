@@ -76,5 +76,5 @@ class MonzoTransactions(object):
 	def get_multiple_criteria(self, criteriaList):
 		result = set(criteriaList[0])
 		for criteria in criteriaList[1:]:
-		    result.intersection_update(criteria)
+			result.intersection_update(criteria)
 		return result
