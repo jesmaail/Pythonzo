@@ -31,18 +31,19 @@ def printTransactionList(transactions):
 myMonzo = Monzo(accessToken)
 transactions = myMonzo.transactions
 
-payments = transactions.get_all_payments()
-topups = transactions.get_all_topups()
+payments = myMonzo.get_all_payments()
+topups = myMonzo.get_all_topups()
 
 paymentsNum = len(payments)
 topupsNum = len(topups)
-merchantNames = transactions.get_list_of_merchant_names()
-categories = transactions.get_list_of_categories()
-paymentsThisWeek = transactions.get_payments_by_date_range("2017-04-10", "2017-04-16")
+merchantNames = myMonzo.get_merchants_names()
+categories = myMonzo.get_categories()
+paymentsThisWeek = myMonzo.get_payments_by_date("2017-04-10", "2017-04-16")
 numPaymentsThisWeek = len(paymentsThisWeek)
-entertainmentTransactions = transactions.get_payments_by_category("entertainment")
+entertainmentTransactions = myMonzo.get_payments_by_category("entertainment")
 numEntertainmentTransactions = len(entertainmentTransactions)
-merchantTransactions = transactions.get_payments_by_merchant_name("The Reverend James")
+merchantTransactions = myMonzo.get_payments_by_merchant("The Reverend James")
+
 criteriaList = [entertainmentTransactions, paymentsThisWeek, merchantTransactions]
 
 print("Monzo Super Object:")
@@ -54,20 +55,5 @@ print("No. of Payments: " + str(paymentsNum))
 print("No. of Topups: " + str(topupsNum))
 
 print("\nPayments by date and category:\n")
-printTransactionList(transactions.get_multiple_criteria(criteriaList))
+printTransactionList(myMonzo.get_multiple_criteria(criteriaList))
 
-# print("\nPayments by merchant name:\n")
-# printTransactionList(merchantTransactions)
-
-# print("\nPayments by category:\n")
-# printTransactionList(entertainmentTransactions)
-# print("No. of Entertainment Transactions: " + str(numEntertainmentTransactions))
-
-# print("\nPayments This Week:\n")
-# printTransactionList(paymentsThisWeek)
-# print("No. of Payments This Week: " + str(numPaymentsThisWeek))
-
-# print("\nMerchants: ")
-# printNumberedList(merchantNames)
-# print("\nCategories: ")
-# printNumberedList(categories)
